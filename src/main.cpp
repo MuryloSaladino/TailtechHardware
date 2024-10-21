@@ -47,15 +47,11 @@ void loop()
         }
     }
 
-    const char* pet1 = "hash1";
-    const char* pet2 = "hash2";
-    const char* pet3 = "hash3";
-    const char* pet4 = "hash4";
-
-    verifyTag(pet1);
-    verifyTag(pet2);
-    verifyTag(pet3);
-    verifyTag(pet4);
+    verifyTag("hash1");
+    verifyTag("hash2");
+    verifyTag("hash3");
+    verifyTag("hash4");
+    Serial.println();
     delay(2000);
 }
 
