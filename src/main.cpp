@@ -9,14 +9,16 @@
 // ------------------ Functions declarations ------------------
 void connectToWiFi();
 void registerEsp();
+bool verifyTag(const char* hash);
 
 // --------------------- Global Constants ---------------------
+bool printed = false;
 
 // --------------------- Global Variables ---------------------
 String ssid = "Murylão";
 String password = "playsdomurylo";
 String token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3Mjk0Nzc0NzAsInN1YiI6IjE4MmFiZDNlLWE3YTktNDNkYi1hYmQ5LTg3YzUzMDkyODczOSJ9.uD5XCfF-Fvh9YUebnVF17_WeVZf2qMPZ2FAovsecMUM";
-String espToken = "";
+String espToken = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwZXREb29ySWQiOiIxZWI4Mzc5YS04NTk5LTRkNTQtYmZhZC05YWZkMTdiNDZjMzMiLCJ1c2VySWQiOiIxODJhYmQzZS1hN2E5LTQzZGItYWJkOS04N2M1MzA5Mjg3MzkiLCJpYXQiOjE3Mjk1MTczOTR9.21bJt-a9yrZlSXiax5jB4FTffqWd2UL-Zj5KrRzKKBk";
 
 
 // --------------------------- Setup --------------------------
@@ -45,7 +47,16 @@ void loop()
         }
     }
 
+    const char* pet1 = "hash1";
+    const char* pet2 = "hash2";
+    const char* pet3 = "hash3";
+    const char* pet4 = "hash4";
 
+    verifyTag(pet1);
+    verifyTag(pet2);
+    verifyTag(pet3);
+    verifyTag(pet4);
+    delay(2000);
 }
 
 void connectToWiFi() {
@@ -82,4 +93,23 @@ void registerEsp() {
     }
 
     http.end();
+}
+
+bool verifyTag(const char* hash) {
+    HTTPClient http;
+    WiFiClient wifiClient;
+
+    char endpoint[100];
+    strcpy(endpoint, "http://192.168.164.137:3000/api/esp/pet/");
+    strcat(endpoint, hash);
+    http.begin(wifiClient, endpoint);
+
+    http.addHeader("Content-Type", "application/json");
+    http.addHeader("Authorization", espToken);
+
+    int response = http.GET();
+    http.end();
+
+    Serial.printf("\n%s authorization: %d", hash, response);
+    return response == 204;
 }
