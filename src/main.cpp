@@ -79,12 +79,7 @@ void registerEsp() {
     int response = http.POST("");
     if(response == 201) 
     {
-        espToken = http.getString();
-    }
-    else
-    {
-        Serial.println(response);
-        Serial.println(http.getString());
+        espToken = "Bearer " + http.getString();
     }
 
     http.end();
