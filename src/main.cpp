@@ -12,7 +12,6 @@ void registerEsp();
 bool verifyTag(const char* hash);
 
 // --------------------- Global Constants ---------------------
-bool printed = false;
 
 // --------------------- Global Variables ---------------------
 String ssid = "Murylão";
