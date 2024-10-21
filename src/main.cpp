@@ -17,7 +17,7 @@ bool verifyTag(const char* hash);
 String ssid = "Murylão";
 String password = "playsdomurylo";
 String token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3Mjk0Nzc0NzAsInN1YiI6IjE4MmFiZDNlLWE3YTktNDNkYi1hYmQ5LTg3YzUzMDkyODczOSJ9.uD5XCfF-Fvh9YUebnVF17_WeVZf2qMPZ2FAovsecMUM";
-String espToken = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwZXREb29ySWQiOiIxZWI4Mzc5YS04NTk5LTRkNTQtYmZhZC05YWZkMTdiNDZjMzMiLCJ1c2VySWQiOiIxODJhYmQzZS1hN2E5LTQzZGItYWJkOS04N2M1MzA5Mjg3MzkiLCJpYXQiOjE3Mjk1MTczOTR9.21bJt-a9yrZlSXiax5jB4FTffqWd2UL-Zj5KrRzKKBk";
+String espToken = "";
 
 
 // --------------------------- Setup --------------------------
@@ -79,7 +79,9 @@ void registerEsp() {
     int response = http.POST("");
     if(response == 201) 
     {
-        espToken = "Bearer " + http.getString();
+        String body = http.getString();
+        String res = body.substring(1, body.length() - 1);
+        espToken = "Bearer " + res;
     }
 
     http.end();
